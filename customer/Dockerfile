@@ -1,6 +1,8 @@
 FROM node:10
 
-COPY ../customer /home/customer
+COPY * /home/customer/
+
+RUN ls -l /home/customer
 
 WORKDIR /home/customer
 
