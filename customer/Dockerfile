@@ -1,9 +1,6 @@
 FROM node:10
 
-RUN ls -lt
-
-WORKDIR /home
-COPY /workspace/anthos-poc/customer /home/customer
+COPY ../customer /home/customer
 
 WORKDIR /home/customer
 
