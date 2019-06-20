@@ -3,7 +3,7 @@ steps:
   args: ['source', 'repos', 'clone', 'anthos-poc']
 
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/gcdeveloper/anthos-customer:$_VER','.']
+  args: ['build', '-t', 'gcr.io/gcdeveloper/anthos-customer:$_VER','customer/.']
 
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'gcr.io/gcdeveloper/anthos-customer:$_VER']
