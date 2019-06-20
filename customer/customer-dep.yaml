@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ser-acc-path
+data:
+  ser-acc-json-path: /var/servaccs/firestore-servacc.json
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gkemicroserv
+spec:
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 5
+      maxUnavailable: 1
+  replicas: 3
+  selector:
+    matchLabels:
+       app: firestore-be
+  template:
+    metadata:
+      name: gke-firestore-be
+      labels:
+        app: firestore-be
+    spec: 
+      containers:
+        - name: gke-firestore-be
+          image: gcr.io/gcdeveloper/gke-firestore:1.0.0
+          command: ["/bin/bash", "-c","node /home/gke-firestore-microserv/app.js"]
+          env:
+            - name: FIRESTORE_JSON_PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: ser-acc-path
+                  key: ser-acc-json-path
+          volumeMounts:
+            - name: servaccs
+              mountPath: "/var/servaccs"
+              readOnly: true
+          resources:
+            limits:
+              cpu: "250m"
+              memory: "128Mi"                
+      volumes:
+        - name: servaccs
+          secret:
+            secretName: firestore-ser-ac-json
+            optional: true
+            items:
+              - key: firestore-json
+                path: firestore-servacc.json

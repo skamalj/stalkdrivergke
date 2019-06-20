@@ -1,0 +1,23 @@
+steps:
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: ['source', 'repos', 'clone', 'gke-firestore-docker']
+
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/gcdeveloper/gke-firestore:$_VER','.']
+
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/gcdeveloper/gke-firestore:$_VER']
+  
+- name: 'gcr.io/cloud-builders/kubectl'
+  args: ['apply', '-f', 'firestore-dep.yaml', '-n', 'default']
+  env:
+  - 'CLOUDSDK_COMPUTE_ZONE=us-central1'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=mykubecluster'
+
+- name: 'gcr.io/cloud-builders/kubectl'
+  args: ['apply', '-f', 'firestore-ser.yaml', '-n', 'default']
+  env:
+  - 'CLOUDSDK_COMPUTE_ZONE=us-central1'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=mykubecluster'
+substitutions:
+  _VER: 1.0.0
