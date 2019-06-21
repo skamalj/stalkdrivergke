@@ -9,7 +9,7 @@ steps:
   args: ['push', 'gcr.io/gcdeveloper/anthos-customer:$_VER']
 
 - name: 'gcr.io/cloud-builders/kubectl'
-  args: ['apply', '-f', 'anthos-poc/mysql/mysql.yaml', '-n', 'default']
+  args: ['apply', '-f', '/workspace/anthos-poc/mysql/mysql.yaml', '-n', 'default']
   env:
   - 'CLOUDSDK_COMPUTE_ZONE=us-central1'
   - 'CLOUDSDK_CONTAINER_CLUSTER=anthos-poc'
