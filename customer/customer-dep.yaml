@@ -49,7 +49,7 @@ spec:
     spec: 
       containers:
         - name: customer-be
-          image: gcr.io/gcdeveloper/anthos-customer:1.5.0
+          image: gcr.io/gcdeveloper/anthos-customer:1.6.0
           envFrom:
           - configMapRef:
                 name: db-config
