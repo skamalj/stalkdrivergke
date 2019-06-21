@@ -7,8 +7,6 @@ steps:
 
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'gcr.io/gcdeveloper/anthos-customer:$_VER']
-substitutions:
-  _VER: 1.0.0
 
 - name: 'gcr.io/cloud-builders/kubectl'
   args: ['apply', '-f', 'customer/customer-dep.yaml', '-n', 'default']
@@ -21,3 +19,6 @@ substitutions:
   env:
   - 'CLOUDSDK_COMPUTE_ZONE=us-central1'
   - 'CLOUDSDK_CONTAINER_CLUSTER=anthos-poc'
+
+substitutions:
+  _VER: 1.0.0
