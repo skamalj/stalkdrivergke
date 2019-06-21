@@ -6,6 +6,7 @@ var getCustomers = function(req, res){
 		if (err){
 			console.log(err);
 			res.status(500);
+			res.send("Backend query failed - check console logs");
 		}
 		else {
 		    res.send(JSON.stringify(data))
