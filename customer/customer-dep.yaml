@@ -30,7 +30,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: gkemicroserv
+  name: customer-dep
 spec:
   strategy:
     type: RollingUpdate
@@ -48,8 +48,8 @@ spec:
         app: customer-be
     spec: 
       containers:
-        - name: gke-firestore-be
-          image: gcr.io/gcdeveloper/anthos-customer:1.0.0
+        - name: customer-be
+          image: gcr.io/gcdeveloper/anthos-customer:1.1.0
           envFrom:
           - configMapRef:
                 name: db-config
