@@ -6,7 +6,7 @@ const mysql = require('mysql');
 var con = mysql.createConnection({
 	host: process.env.DB_HOST,
 	user: process.env.DB_USER,
-	password: 'incorrectpass',
+	password: process.env.DB_PASS,
 	database: process.env.DB_NAME
   });
   
