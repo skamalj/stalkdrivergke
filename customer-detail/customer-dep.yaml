@@ -1,0 +1,57 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: db-config
+data:
+  DB_NAME: classicmodels
+  DB_USER: anthos
+  DB_HOST: anthos-mysql
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: db-pass
+data:
+  DB_PASS: SHAxbnZlbnQ=
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: customer-detail-ser
+spec:
+  selector:
+    app: customer-detail-be
+  ports:
+    - name: customer-detail-be-port
+      protocol: TCP
+      targetPort: 9000
+      port: 9000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: customer-detail-dep
+spec:
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 3
+      maxUnavailable: 1
+  replicas: 2
+  selector:
+    matchLabels:
+       app: customer-detail-be
+  template:
+    metadata:
+      name: customer-detail-be
+      labels:
+        app: customer-detail-be
+    spec: 
+      containers:
+        - name: customer-detail-be
+          image: gcr.io/gcdeveloper/anthos-customer-detail:1.7.0
+          envFrom:
+          - configMapRef:
+                name: db-config
+          - secretRef:
+                 name: db-pass    

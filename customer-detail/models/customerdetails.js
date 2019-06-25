@@ -11,18 +11,18 @@ var pool = mysql.createPool({
 	database: process.env.DB_NAME
   });
   
-var getCustomers = function(cb) {
+var getCustomerDetails = function(custid, cb) {
 		pool.getConnection(function(err,con) {
 			if (err) {
 				cb(err,null,null);
 			}	
 			else {
-				con.query("SELECT customerName FROM customers limit 10", cb);
+				con.query("SELECT * FROM customers where customerNumber=?",custid, cb);
 				con.release();	
 			}   
 	  });
 };
 
 module.exports = {
-		getCustomers: getCustomers
+		getCustomerDetails: getCustomerDetails
 }

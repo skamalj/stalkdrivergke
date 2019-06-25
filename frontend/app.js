@@ -15,7 +15,7 @@ require('./routes/approutes')(app)
 
 app.set('port', process.env.PORT || 3000);
 app.listen(app.get('port'), function() {
-	logger.info('Express started on http://localhost:' + app.get('port')
+	console.log('Express started on http://localhost:' + app.get('port')
 			+ '; press Ctrl-C to terminate.');
 });
 

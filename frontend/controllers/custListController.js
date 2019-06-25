@@ -1,9 +1,13 @@
 
 var populateCustomerList = function(req, res){
-	request('customer-ser:9000', function (error, response, body) {
+	var request = require('request');
+	request('http://localhost:9000/loadCustomers', function (error, response, body) {
       if (!error) {
-		res.send(data);
+		res.send(body);
 	  }	
+	  else {
+		  console.log(error)
+	  }
     });
 }
 

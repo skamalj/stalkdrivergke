@@ -1,0 +1,18 @@
+steps:
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: ['source', 'repos', 'clone', 'anthos-poc']
+
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/gcdeveloper/anthos-frontend:$_VER','frontend/.']
+
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/gcdeveloper/anthos-frontend:$_VER']
+
+- name: 'gcr.io/cloud-builders/kubectl'
+  args: ['apply', '-f', 'frontend/frontend-dep.yaml', '-n', 'default']
+  env:
+  - 'CLOUDSDK_COMPUTE_ZONE=us-central1'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=anthos-poc'
+  
+substitutions:
+  _VER: 1.7.0

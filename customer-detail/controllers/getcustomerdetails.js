@@ -1,8 +1,8 @@
 //Callback function to route - /getScrips
-var users = require('../models/customer.js');
+var details = require('../models/customerdetails.js');
 
-var getCustomers = function(req, res){
-	users.getCustomers(function(err, data, fields) {
+var getCustomerDetails = function(req, res){
+	details.getCustomerDetails(req.params.custid, function(err, data, fields) {
 		if (err){
 			console.log(err);
 			res.status(500);
@@ -15,5 +15,5 @@ var getCustomers = function(req, res){
 };
 
 module.exports = {
-		getCustomers: getCustomers
+		getCustomerDetails: getCustomerDetails
 }
