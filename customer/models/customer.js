@@ -17,7 +17,7 @@ var getCustomers = function(cb) {
 				cb(err,null,null);
 			}	
 			else {
-				con.query("SELECT customerName FROM customers limit 10", cb);
+				con.query("SELECT customerNumber,customerName FROM customers limit 10", cb);
 				con.release();	
 			}   
 	  });

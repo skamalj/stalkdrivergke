@@ -15,4 +15,4 @@ steps:
   - 'CLOUDSDK_CONTAINER_CLUSTER=anthos-poc'
   
 substitutions:
-  _VER: 1.9.0
+  _VER: 1.9.1
