@@ -1,6 +1,6 @@
 <div id="example-1">
 <table class="w3-table-all w3-centered">
-  <tr v-for="item in items">
+  <tr v-for="item in items" onmouseover="loadCustomerDetails( {{ item.customerNumber }} )">
     <td>\{{ item.customerNumber }}</td>
     <td>\{{ item.customerName }}</td>
   </tr>

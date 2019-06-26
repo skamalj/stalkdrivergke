@@ -7,3 +7,7 @@ function loadCustomers(vueObj) {
 	   });
 };	
 
+function loadCustomerDetails(custid) {
+	window.alert(custid)
+};
+

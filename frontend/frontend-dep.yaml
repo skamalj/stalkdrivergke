@@ -33,4 +33,4 @@ spec:
     spec: 
       containers:
         - name: frontend
-          image: gcr.io/gcdeveloper/anthos-frontend:1.9.1  
+          image: gcr.io/gcdeveloper/anthos-frontend:1.9.2 

@@ -10,6 +10,7 @@ app.get('/', function(req, res) {
 
 
 app.get('/loadCustomers', custlistctrl.populateCustomerList);
+app.get('/loadCustomerDetails/:custid', custlistctrl.populateCustomerDetais);
 
 // 404 
 app.use(function(req, res, next) {
