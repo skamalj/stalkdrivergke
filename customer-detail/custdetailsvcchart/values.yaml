@@ -1,0 +1,4 @@
+project_id: demoskamalj
+cluster_name: demo
+service_name: cust-details
+imagetag: '0.1.0'

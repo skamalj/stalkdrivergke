@@ -1,0 +1,12 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/$PROJECT_ID/anthos-customer-detail:$TAG_NAME','customer-detail/.']
+
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/$PROJECT_ID/anthos-customer-detail:$TAG_NAME']
+
+- name: 'gcr.io/$PROJECT_ID/helm'
+  args: ['upgrade', '--install', '--force' , '--set', 'imagetag=$TAG_NAME', 'custdetailsvcrel', './customer-detail/custdetailsvcchart', '--namespace', 'default']
+  env:
+  - 'CLOUDSDK_COMPUTE_ZONE=us-central1'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=demo'

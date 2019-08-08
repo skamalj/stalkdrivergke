@@ -1,0 +1,17 @@
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: custom-metric-sd
+  namespace: default
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: customer-detail-dep
+  minReplicas: 1
+  maxReplicas: 7
+  metrics:
+  - type: Pods
+    pods:
+      metricName: custom.googleapis.com|cust-details|total_requests_cust_details
+      targetAverageValue: 10
