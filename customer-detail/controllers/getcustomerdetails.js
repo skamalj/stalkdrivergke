@@ -13,7 +13,7 @@ var getCustomerDetails = function(req, res){
 			res.send("Backend query failed - check console logs");
 		}
 		else {
-			data["Test"] = "Testing;
+			data["Test"] = "Testing";
 			res.send(data);
 //Increment request number on every call			
 			++stalkdriver.requests	
