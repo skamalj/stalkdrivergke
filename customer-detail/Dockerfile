@@ -1,6 +1,8 @@
 FROM node:10
 
-COPY . /home/customer-detail
+COPY customer-detail /home/customer-detail
+
+RUN ls -l /home
 
 RUN ls -l /home/customer-detail
 
