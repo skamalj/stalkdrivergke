@@ -1,4 +1,4 @@
-project_id: demoskamalj
-cluster_name: demo
+project_id: gcdeveloper
+cluster_name: mykubecluster
 service_name: cust-details
 imagetag: '0.1.0'
