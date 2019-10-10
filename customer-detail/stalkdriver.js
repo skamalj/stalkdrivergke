@@ -56,7 +56,7 @@ async function storeMetric(time_now,counter) {
         name: client.projectPath(projectId),
         timeSeries: [{
             metric: {
-                type: 'custom.googleapis.com/' + servicename + '/total_requests_cust_details',
+                type: 'custom.googleapis.com/' + servicename + '/total_requests_new',
             },
             metricKind: 'CUMULATIVE',
             resource: {
