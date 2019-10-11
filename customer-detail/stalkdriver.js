@@ -18,6 +18,8 @@ const client = new monitoring.MetricServiceClient();
 //This is request counter and is exported in this module.  Other modules can increment this variable.
 //This value is then passed by routers/controllers to function storeMetric to capture its snapshot in time
 var requests = 0;
+var latencydatapoint = null;
+
 
 //Request options to call metadata api from node to get zone
 const options = {
@@ -26,6 +28,20 @@ const options = {
       'Metadata-Flavor': 'Google'
     }
   };
+
+function storelatencydatapoints(time_now,latency) {
+        var  dataPoint = {
+            interval: { 
+                endTime: {
+                    seconds: time_now / 1000,
+                },
+            },
+            value: {
+                int64Value: latency,
+            },
+        }; 
+	this.latencydatapoint  = dataPoint;
+}
 
 async function storeMetric(time_now,start_time,counter) {
 //Get the zone value    
@@ -87,25 +103,18 @@ async function storeMetric(time_now,start_time,counter) {
  }));
 }
 
-async function storeLatencyMetric(time_now,latency) {
+//This function sends latency metric to gcloud. metric is implemented as GUAGE.
+async function storeLatencyMetric(latency) {
+	if ( latency == null) {
+        console.log("Exiting with null latency");
+		return ;
+	}
     //Get the zone value    
         await rp(options).then(function(data) {
             zone = data.split('/').pop();
           }).catch(function (err) {
             console.log(err);
           });
-    //For CUMMULATIVE metric both start and end time are required. Requirement is start time should be same for
-    //each metric data point. As these metrics are exposed as rate per sec, start time does not matter.
-        const dataPoint = {
-            interval: { 
-                endTime: {
-                    seconds: time_now / 1000,
-                },
-            },
-            value: {
-                int64Value: latency,
-            },
-        }; 
     
      //Metric request object. Metric type is metric name and service name is used in the type to have
      //different namespace   
@@ -129,7 +138,7 @@ async function storeLatencyMetric(time_now,latency) {
     
                     },
                 },
-                points: [dataPoint],
+                points: [latency],
             },],
         };
      
@@ -137,8 +146,8 @@ async function storeLatencyMetric(time_now,latency) {
     if(err) {	    
       console.log(err);
     }	 
-    else {
-      console.log("Current latency for project_id: "+projectId+" cluster: "+clustername+" zone: "+zone+" is: "+counter.toString());	     
+    else {	    
+      console.log("Current latency for project_id: "+projectId+" cluster: "+clustername+" zone: "+zone+" is: "+latency.value["int64Value"].toString());	     
     }	      
  }));
 }
@@ -146,4 +155,7 @@ async function storeLatencyMetric(time_now,latency) {
 module.exports = {
     requests: requests,
     storeMetric: storeMetric,
+    storeLatencyMetric: storeLatencyMetric,	  
+    storelatencydatapoints: storelatencydatapoints,
+    latencydatapoint: latencydatapoint,	
 }
