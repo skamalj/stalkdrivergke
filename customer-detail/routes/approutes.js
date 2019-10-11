@@ -1,7 +1,6 @@
 //Defines routes for the application linked to controllers/callback functions
 
 const custdetailctrl = require('../controllers/getcustomerdetails.js');
-const stalkdriver = require('../stalkdriver.js');
 
 module.exports = function(app){
 
