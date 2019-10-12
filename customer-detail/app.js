@@ -1,5 +1,6 @@
+require('@google-cloud/trace-agent').start();
 const express = require('express');
-
+const logger = require('./winston.js')
 //Import stalkdriver routines
 const stalkdriver = require('./stalkdriver.js');
 var app = express();
@@ -19,8 +20,10 @@ app.use(function (req, res,next) {
 //Set routes
 require("./routes/approutes.js")(app)
 
+//Set Port 
 app.set('port', process.env.PORT || 9003);
 
+//This starttime is required by metering libraries for all metric datapoint.
 app_start_time = Date.now()/1000;
 
 //Metric are send to stalkdriver every 15 seconds. storeMetric is called using anonymoue function 
@@ -31,8 +34,8 @@ setInterval(function() {stalkdriver.storeMetric(Date.now(),app_start_time,stalkd
 setInterval(function() {stalkdriver.storeLatencyMetric(stalkdriver.latencydatapoint)} , 15000 );
 
 app.listen(app.get('port'), function() {
-	console.info('Express started on http://localhost:' + app.get('port')
-			+ '; press Ctrl-C to terminate.');
+	logger.logInfo('Express started on http://localhost:' + app.get('port')
+			+ '; press Ctrl-C to terminate.',null,null);
 });
 
 

@@ -9,11 +9,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@google-cloud/logging-winston": "^2.1.0",
     "@google-cloud/monitoring": "^1.2.2",
+    "@google-cloud/trace-agent": "^4.2.1",
     "express": "^4.17.1",
     "mysql": "^2.17.1",
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
-    "response-time": "^2.3.2"
+    "response-time": "^2.3.2",
+    "winston": "^3.2.1"
   }
 }

@@ -48,7 +48,7 @@ async function storeMetric(time_now,start_time,counter) {
     await rp(options).then(function(data) {
         zone = data.split('/').pop();
       }).catch(function (err) {
-        console.log(err);
+        console.error(err);
       });
 //For CUMMULATIVE metric both start and end time are required. Requirement is start time should be same for
 //each metric data point. As these metrics are exposed as rate per sec, start time does not matter.
@@ -95,7 +95,7 @@ async function storeMetric(time_now,start_time,counter) {
 //Store metric data point, if this is first data point metric descripter is created as well    
     client.createTimeSeries(request,(err => {    
     if(err) {	    
-      console.log(err);
+      console.error(err);
     }	 
     else {
       console.log("Current counter for project_id: "+projectId+" cluster: "+clustername+" zone: "+zone+" is: "+counter.toString());	     
@@ -106,7 +106,6 @@ async function storeMetric(time_now,start_time,counter) {
 //This function sends latency metric to gcloud. metric is implemented as GUAGE.
 async function storeLatencyMetric(latency) {
 	if ( latency == null) {
-        console.log("Exiting with null latency");
 		return ;
 	}
     //Get the zone value    
@@ -144,7 +143,7 @@ async function storeLatencyMetric(latency) {
      
     client.createTimeSeries(request,(err => {    
     if(err) {	    
-      console.log(err);
+      console.error(err);
     }	 
     else {	    
       console.log("Current latency for project_id: "+projectId+" cluster: "+clustername+" zone: "+zone+" is: "+latency.value["int64Value"].toString());	     
